@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filtered Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="background-color: #e0f7e0;">
+    <div class="container">
+        <h2>Filtered Results for {{ tech }}</h2>
+        <form method="POST" action="{{ url_for('download') }}">
+            <table>
+                <thead>
+                    <tr><th>S.No</th><th>Device Name</th><th>Additional Mask</th></tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                        {% for row in data %}
+                        <tr><td>{{ loop.index }}</td><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td>-</td><td>No devices match</td><td>-</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <input type="hidden" name="results" value="{{ joined_data }}">
+            <button type="submit">⬇️ Download as Excel</button>
+        </form>
+        <a href="{{ url_for('index') }}"><button>🔙 Back</button></a>
+    </div>
+</body>
+</html>
